@@ -1,12 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Flask & Python</title>
-    <h1>Flask & Python</h1>
-    <h3>Main page</h3>
+    <title> Simple Flask TODO app in Python Flask</title>
 </head>
 <body>
-
+<h2>Create</h2>
+<form method="POST" action="/home">
+<input type="text" name="text" placeholder="Add a children information">
+<button type="submit" value="update" name="showlist">Create new</button>
+</form>
+<h2> list</h2>
+{% for note in notes %}
+<p>
+    <input type="text" title="{{note.dateAdded}}" value="{{note.text}}" name="text">
+</p>
+{% endfor %}
 </body>
 </html>

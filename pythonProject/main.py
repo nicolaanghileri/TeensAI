@@ -1,16 +1,86 @@
 from flask import *
+from flask_sqlalchemy import *
+from datetime import datetime
+import os
+
 app = Flask(__name__)
 
+if not os.path.exists('databases'):
+    os.makedirs('databases')
+project_dir = os.path.dirname(os.path.abspath(__file__))
+database_file = "sqlite:///{}".format(os.path.join(project_dir, "databases/childrens.db"))
+app.config["SQLALCHEMY_DATABASE_URI"] = database_file
+db = SQLAlchemy(app)
 
-@app.route('/home')
-def homepage():
-    with open('templates/home.html', 'r') as html_content:
+"""
+--------------------------------------
+"""
+
+
+class Children(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    text = db.Column(db.Text)
+    done = db.Column(db.Boolean)
+    dateAdded = db.Column(db.DateTime, default=datetime.now())
+
+
+def create_note(text):
+    note = Children(text=text)
+    db.session.add(note)
+    db.session.commit()
+    db.session.refresh(note)
+
+
+def read_notes():
+    return db.session.query(Children).all()
+
+
+def update_note(note_id, text, done):
+    db.session.query(Children).filter_by(id=note_id).update({
+        "text": text,
+        "done": True if done == "on" else False
+    })
+    db.session.commit()
+
+
+def delete_note(note_id):
+    db.session.query(Children).filter_by(id=note_id).delete()
+    db.session.commit()
+
+
+@app.route("/home", methods=["POST", "GET"])
+def view_index():
+    if request.method == "POST":
+        create_note(request.form['text'])
+    return render_template("home.html", notes=read_notes())
+
+
+"""
+--------------------------------------
+"""
+
+
+@app.route('/registration', methods=['GET', 'POST'])
+def registration():
+    if request.method == 'POST':
+        if request.form.get('continue') == 'login':
+            return redirect('/')
+        else:
+            pass
+
+    with open('templates/registration.html', 'r') as html_content:
+        return str(html_content.read())
+
+
+@app.route('/list')
+def list():
+    with open('templates/list.html', 'r') as html_content:
         return str(html_content.read())
 
 
 @app.route('/')
 def app_html():
-    with open('templates/login.html', 'r') as html_content:
+    with open('templates/index.html', 'r') as html_content:
         return str(html_content.read())
 
 
@@ -22,11 +92,13 @@ def my_form_post():
     if request.method == 'POST':
         if request.form.get('continue') == 'Continue':
             return redirect('home')
+        elif request.form.get('continue') == 'register':
+            return redirect('registration')
         else:
             pass
     elif request.method == 'GET':
-        return render_template('login2.html')
-    with open('templates/login2.html', 'r') as html_content:
+        return render_template('home.html')
+    with open('templates/home.html', 'r') as html_content:
         return str(html_content.read())
 
 

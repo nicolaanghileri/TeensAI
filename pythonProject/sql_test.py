@@ -47,7 +47,7 @@ def delete_note(note_id):
 def view_index():
     if request.method == "POST":
         create_note(request.form['text'])
-    return render_template("index.html", notes=read_notes())
+    return render_template("home.html", notes=read_notes())
 
 
 @app.route("/edit/<note_id>", methods=["POST", "GET"])
