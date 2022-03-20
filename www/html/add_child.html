@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="../css/index-css.css">
+
+    <style>
+        .radio-btn {
+            accent-color: #406e3c;
+        }
+        .radio-btn {
+            accent-color: #406e3c;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-clean" style="padding: 7% 0;">
+        <form method="post" action="{{ url_for('login') }}">
+            <h2 class="sr-only">Add a child</h2>
+            <div class="form-group"><input class="form-control" type="text" name="name" placeholder="Name"></div>
+            <div class="form-group"><input class="form-control" type="number" name="weight" placeholder="Weight (gr)"></div>
+            <div class="form-group"><input class="form-control" type="number" name="height" placeholder="Height (cm)"></div>
+            <div class="form-group"><input class="form-control" type="date" name="birth" placeholder="Birth"></div>
+            <input type="radio" class="radio-btn" id="male" name="gender" value="M">
+            <label for="male">Male</label><br>
+            <input type="radio" class="radio-btn" id="female" name="gender" value="F">
+            <label for="female">Female</label><br>
+            <div class="form-group"><button class="btn btn-primary btn-block" type="submit">Add</button></div><a href="#">back</a>
+        </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
