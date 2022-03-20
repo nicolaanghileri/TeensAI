@@ -10,26 +10,26 @@ app.config["SQLALCHEMY_DATABASE_URI"] = database_file
 db = SQLAlchemy(app)
 
 
-class Note(db.Model):
+class Children(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    text = db.Column(db.Text)
+    children_name = db.Column(db.Text)
     done = db.Column(db.Boolean)
     dateAdded = db.Column(db.DateTime, default=datetime.now())
 
 
 def create_note(text):
-    note = Note(text=text)
+    note = Children(text=text)
     db.session.add(note)
     db.session.commit()
     db.session.refresh(note)
 
 
 def read_notes():
-    return db.session.query(Note).all()
+    return db.session.query(Children).all()
 
 
 def update_note(note_id, text, done):
-    db.session.query(Note).filter_by(id=note_id).update({
+    db.session.query(Children).filter_by(id=note_id).update({
         "text": text,
         "done": True if done == "on" else False
     })
@@ -37,7 +37,7 @@ def update_note(note_id, text, done):
 
 
 def delete_note(note_id):
-    db.session.query(Note).filter_by(id=note_id).delete()
+    db.session.query(Children).filter_by(id=note_id).delete()
     db.session.commit()
 
 

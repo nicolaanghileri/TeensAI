@@ -5,13 +5,13 @@
 <body>
 <h2>Create</h2>
 <form method="POST" action="/">
-<input type="text" name="text" placeholder="Add a new TODO item">
+<input type="text" name="text" placeholder="Add a children information">
 <button type="submit" value="update">Create new</button>
 </form>
 <h2> list</h2>
-{% for note in notes %}
+{% for children in childrens %}
 <p>
-    <input type="text" title="{{note.dateAdded}}" value="{{note.text}}" name="text">
+    <input type="text" title="{{children.dateAdded}}" value="{{children.text}}" name="text">
 </p>
 {% endfor %}
 </body>

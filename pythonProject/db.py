@@ -2,28 +2,25 @@ __author__ = "nicolaanghileri"
 
 from flask_sqlalchemy import SQLAlchemy
 
-
 db = SQLAlchemy()
+
 
 class User(db.Model):
     __tablename__ = 'users'
 
-    username = db.Column(db.String,primary_key=True)
+    username = db.Column(db.String, primary_key=True)
     password = db.column(db.Password)
     children = db.relationship('Child', backref='users', lazy='True')
-
 
     def __init__(self, username, password):
         self.username = username
         self.password = password
-
 
     def __repr__(self):
         return f"{self.username}:"
 
 
 class Child(db.Model):
-
     __tablename__ = 'child'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -41,5 +38,3 @@ class Child(db.Model):
 
     def _repr(self):
         return f"{self.name}:{self.birth_date}:{self.weight}:{self.height}"
-
-
