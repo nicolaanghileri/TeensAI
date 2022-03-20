@@ -30,5 +30,10 @@ def my_form_post():
         return str(html_content.read())
 
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+
 if __name__ == '__main__':
     app.run()
