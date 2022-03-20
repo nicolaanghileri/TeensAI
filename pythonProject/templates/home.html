@@ -5,13 +5,19 @@
 <body>
 <h2>Create</h2>
 <form method="POST" action="/home">
-<input type="text" name="text" placeholder="Add a children information">
+<input type="text" name="name" placeholder="Add children name">
+<input type="date" name="birth_date" placeholder="birth date">
+<input type="number" name="weight" placeholder="weight">
+<input type="number" name="height" placeholder="height">
 <button type="submit" value="update" name="showlist">Create new</button>
 </form>
 <h2> list</h2>
 {% for note in notes %}
 <p>
-    <input type="text" title="{{note.dateAdded}}" value="{{note.text}}" name="text">
+    <input type="text" title="{{note.name}}" value="{{note.name}}" name="text">
+    <input type="text" title="{{note.birth_date}}" value="{{note.birth_date}}" name="text">
+    <input type="text" title="{{note.weight}}" value="{{note.weight}}" name="text">
+    <input type="text" title="{{note.height}}" value="{{note.height}}" name="text">
 </p>
 {% endfor %}
 </body>

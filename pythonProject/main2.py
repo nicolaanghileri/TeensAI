@@ -1,73 +1,42 @@
 from flask import *
 from flask_sqlalchemy import *
-import flask_scss
 from datetime import datetime
 import os
 
 app = Flask(__name__)
-flask_scss.Scss(app)
+
 if not os.path.exists('databases'):
     os.makedirs('databases')
 project_dir = os.path.dirname(os.path.abspath(__file__))
 database_file = "sqlite:///{}".format(os.path.join(project_dir, "databases/childrens.db"))
 app.config["SQLALCHEMY_DATABASE_URI"] = database_file
 db = SQLAlchemy(app)
-counter = 0
-
-
-class User(db.Model):
-    __tablename__ = 'users'
-
-    username = db.Column(db.String, primary_key=True)
-    password = db.column(db.String)
-    # children = db.relationship('Child', backref='users', lazy='True')
-
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
-
-    def __repr__(self):
-        return f"{self.username}:"
-
-
-class Child(db.Model):
-    __tablename__ = 'child'
-
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    name = db.Column(db.String)
-    birth_date = db.Column(db.DateTime, default=datetime.now())
-    weight = db.Column(db.Integer)
-    height = db.Column(db.Integer)
-    # user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-    def __init__(self, name, birth_date, weight, height):
-        self.name = name
-        self.birth_date = birth_date
-        self.weight = weight
-        self.height = height
-
-    def _repr(self):
-        return f"{self.name}:{self.birth_date}:{self.weight}:{self.height}"
-
 
 """
 --------------------------------------
 """
 
 
-def create_note(name, birth_date, weight, height):
-    note = Child(name=name, birth_date=birth_date, weight=weight, height=height)
+class Children(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    text = db.Column(db.Text)
+    done = db.Column(db.Boolean)
+    dateAdded = db.Column(db.DateTime, default=datetime.now())
+
+
+def create_note(text):
+    note = Children(text=text)
     db.session.add(note)
     db.session.commit()
     db.session.refresh(note)
 
 
 def read_notes():
-    return db.session.query(Child).all()
+    return db.session.query(Children).all()
 
 
 def update_note(note_id, text, done):
-    db.session.query(Child).filter_by(id=note_id).update({
+    db.session.query(Children).filter_by(id=note_id).update({
         "text": text,
         "done": True if done == "on" else False
     })
@@ -75,23 +44,16 @@ def update_note(note_id, text, done):
 
 
 def delete_note(note_id):
-    db.session.query(Child).filter_by(id=note_id).delete()
+    db.session.query(Children).filter_by(id=note_id).delete()
     db.session.commit()
 
 
 @app.route("/home", methods=["POST", "GET"])
 def view_index():
-    global counter
-    counter += 1
-    if request.method == "POST" and counter > 1:
-        print('ok')
-        create_note(request.form['name'],
-                    datetime(int(request.form['birth_date'].split('-')[0]),
-                             int(request.form['birth_date'].split('-')[1]),
-                             int(request.form['birth_date'].split('-')[2])),
-                    int(request.form['weight']),
-                    int(request.form['height']))
-    return render_template('home.html', notes=read_notes())
+    if request.method == "POST":
+        create_note(request.form['text'])
+    with open('html/home.html', 'r') as html_content:
+        return str(html_content.read())
 
 
 """
@@ -141,10 +103,5 @@ def page_not_found(e):
         return str(html_content.read()), 404
 
 
-db.create_all()
 if __name__ == '__main__':
-    try:
-        app.run(debug=True)
-    except KeyboardInterrupt:
-        os.unlink(database_file)
-        exit()
+    app.run(debug=True)
