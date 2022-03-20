@@ -38,25 +38,41 @@ class Child(db.Model):
     birth_date = db.Column(db.DateTime, default=datetime.now())
     weight = db.Column(db.Integer)
     height = db.Column(db.Integer)
+    bmi = db.Column(db.String)
     # user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-    def __init__(self, name, birth_date, weight, height):
+    def __init__(self, name, birth_date, weight, height, bmi):
         self.name = name
         self.birth_date = birth_date
         self.weight = weight
         self.height = height
+        self.bmi = bmi
 
     def _repr(self):
-        return f"{self.name}:{self.birth_date}:{self.weight}:{self.height}"
+        return f"{self.name}:{self.birth_date}:{self.weight}:{self.height}:{self.bmi}"
 
 
 """
 --------------------------------------
 """
+def get_child_health( height,weight):
+    bmi =  (weight / (height * height)) * 703
+
+    if bmi < 18.5:
+        return "Attention: Underweight"
+    elif bmi <= 24.9:
+        return "Normal"
+    elif bmi <= 29.9:
+        return "Attention: Overweight"
+    else:
+        return "Attention: Obese"
+
+
 
 
 def create_note(name, birth_date, weight, height):
-    note = Child(name=name, birth_date=birth_date, weight=weight, height=height)
+    health = get_child_health(height, weight)
+    note = Child(name=name, birth_date=birth_date, weight=weight, height=height, bmi=health)
     db.session.add(note)
     db.session.commit()
     db.session.refresh(note)
