@@ -4,15 +4,17 @@ from datetime import datetime
 import os
 
 app = Flask(__name__)
+if not os.path.exists('databases'):
+    os.makedirs('databases')
 project_dir = os.path.dirname(os.path.abspath(__file__))
-database_file = "sqlite:///{}".format(os.path.join(project_dir, "todo.db"))
+database_file = "sqlite:///{}".format(os.path.join(project_dir, "databases/childrens.db"))
 app.config["SQLALCHEMY_DATABASE_URI"] = database_file
 db = SQLAlchemy(app)
 
 
 class Children(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    children_name = db.Column(db.Text)
+    text = db.Column(db.Text)
     done = db.Column(db.Boolean)
     dateAdded = db.Column(db.DateTime, default=datetime.now())
 

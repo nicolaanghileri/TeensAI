@@ -9,9 +9,9 @@
 <button type="submit" value="update">Create new</button>
 </form>
 <h2> list</h2>
-{% for children in childrens %}
+{% for note in notes %}
 <p>
-    <input type="text" title="{{children.dateAdded}}" value="{{children.text}}" name="text">
+    <input type="text" title="{{note.dateAdded}}" value="{{note.text}}" name="text">
 </p>
 {% endfor %}
 </body>
