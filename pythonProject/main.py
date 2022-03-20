@@ -72,15 +72,9 @@ def registration():
         return str(html_content.read())
 
 
-@app.route('/list')
-def list():
-    with open('templates/list.html', 'r') as html_content:
-        return str(html_content.read())
-
-
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def app_html():
-    with open('templates/index.html', 'r') as html_content:
+    with open('html\\index.html', 'r') as html_content:
         return str(html_content.read())
 
 
@@ -97,14 +91,14 @@ def my_form_post():
         else:
             pass
     elif request.method == 'GET':
-        return render_template('home.html')
-    with open('templates/home.html', 'r') as html_content:
+        return render_template('html\\home.html')
+    with open('html\\home.html', 'r') as html_content:
         return str(html_content.read())
 
 
 @app.errorhandler(404)
 def page_not_found(e):
-    return render_template('404.html'), 404
+    return render_template('html\\404.html'), 404
 
 
 if __name__ == '__main__':
