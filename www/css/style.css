@@ -25,7 +25,7 @@ h2 {
   font-size: 20px; }
 
 .custom-table {
-  min-width: 900px; }
+  min-width: 300px; }
   .custom-table thead tr, .custom-table thead th {
     border-top: none;
     border-bottom: none !important; }
@@ -94,7 +94,7 @@ h2 {
     height: 20px;
     width: 20px;
     border-radius: 4px;
-    border: 2px solid #4a7b46;
+    border: 2px solid #406e3c;
     background: transparent;
 }
 

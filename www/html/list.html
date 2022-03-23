@@ -14,17 +14,25 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="../fonts/icomoon/style.css">
-
-    <link rel="stylesheet" href="../css/owl.carousel.min.css">
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="../css/bootstrap.min.css">
 
     <!-- Style -->
     <link rel="stylesheet" href="../css/style.css">
+
+    <link rel="stylesheet" href="../css/index-css.css">
+
+    <style>
+        .login-clean form .btn-primary:hover, .login-clean form .btn-primary:active {
+            background: #406e3c;
+        }
+
+        .login-clean form .btn-primary:active {
+            transform: translateY(1px);
+        }
+    </style>
 </head>
 <body>
 
@@ -35,7 +43,8 @@
             <h2 class="mb-5">Children</h2>
 
             <div class="table-responsive">
-                <form method="post" action="{{ url_for('meal') }}">
+                <form method="get" action="./diet.html">
+                    <!--<form method="post" action="{{ url_for('meal') }}">-->
                     <table class="table custom-table">
                         <thead>
                             <tr>
@@ -50,7 +59,7 @@
                                 <th scope="col">Weight</th>
                                 <th scope="col">Height</th>
                                 <th scope="col">Birth</th>
-                                <th scope="col">Gender</th>
+                                <th scope="col">Status</th>
                             </tr>
                         </thead>
                         <tbody id="table-body">
@@ -65,10 +74,11 @@
                                 <td>Matthew</td>
 
                                 <td>
-                                    7800 gr.
+                                    14000 gr.
                                 </td>
-                                <td>120 cm</td>
-                                <td>12.04.2018</td>
+                                <td>65 cm</td>
+                                <td>12.04.2021</td>
+                                <td>Overweight</td>
                             </tr>
                             <tr id="child-1">
                                 <th scope="row">
@@ -80,10 +90,11 @@
                                 <td>Luck</td>
 
                                 <td>
-                                    5898 gr.
+                                    5800 gr.
                                 </td>
-                                <td>114 cm</td>
-                                <td>23.09.2020</td>
+                                <td>70 cm</td>
+                                <td>01.10.2021</td>
+                                <td>Underweight</td>
                             </tr>
                             <tr id="child-3">
                                 <th scope="row">
@@ -99,10 +110,15 @@
                                 </td>
                                 <td>60 cm</td>
                                 <td>12.01.2022</td>
+                                <td>Underweight</td>
                             </tr>
 
                         </tbody>
                     </table>
+
+                    <a href="./add_child.html">add child</a>
+                    <div class="login-clean form-group"><button class="btn btn-primary btn-block" type="submit">Meal</button></div>
+
                 </form>
             </div>
         </div>
